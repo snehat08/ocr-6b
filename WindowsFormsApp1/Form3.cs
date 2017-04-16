@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1
-{
+{                                                                                                         
     public partial class Form3 : Form
     {
         public Form3()
@@ -34,7 +34,6 @@ namespace WindowsFormsApp1
             int xmax = bmp.Width;
             int ymax = bmp.Height;
             Bitmap bwimage = processImage(bmp);
-            int counter = 0;
             pictureBox1.Image = bwimage;
             int[] xaxis = new int[xmax];
             int[] yaxis = new int[ymax];
@@ -43,69 +42,15 @@ namespace WindowsFormsApp1
             int y, x, i = 1,j = 1;
             int iy = 1;
             int ix = 1;
-            yaxis[0] = 0;
-            for (y = 1; y < ymax; y++)
-            {
-                for (x = 1; x < xmax; x++)
-                {
-                    if(bwimage.GetPixel(x,y).Name == "ff000000")
-                    {
-                        tempy[iy++] = y;
-                        break;
-                    }
-                }
-            }
-            for(int p = 1; p < ymax; p++)
-            {
-               
-                if ((tempy[p-1] != tempy[p] - 1) || (tempy[p] + 1 != tempy[p + 1]))
-                {
-                    yaxis[i++] = tempy[p]+1;
-                   
-                }
-            }
-          
 
-            for (x = 1; x <xmax; x++)
-            {
-                for (y = 0;y < ymax; y++)
-                {
-                    if (bwimage.GetPixel(x, y).Name == "ff000000")
-                    {
-                        tempx[ix++] = x;
-                        break;
-                    }
-                }
-            }
-            i = 1;
-             for (int p = 1; p < xmax; p++)
-            {
-
-                if ((tempx[p - 1] != tempx[p] - 1) || (tempx[p] + 1 != tempx[p + 1]))
-                {
-                    xaxis[i] = tempx[p] +1;
-                    i++;
-                }
-            }
-            for (i = 0; i < ymax; i++)
-            {
-                Console.WriteLine(yaxis[i]+ " " + xaxis[i]);
-            }
-            //  Console.WriteLine(xaxis[2]+" "+ yaxis[2] + " " + (xaxis[3] - xaxis[2] )+ " " + (yaxis[3] - yaxis[2]));
-
+            yaxis = getYArray(xmax, ymax, bwimage); 
+            xaxis = getXArray(xmax, ymax, bwimage);
 
             int k;
             Bitmap[] croppedImg = new Bitmap[30];
-            Bitmap temp;
-
-
-            for (i = 1, j = 2, k = 0; k <5 ;k++)
-            {
-                
-                Console.WriteLine(xaxis[i] + " " + yaxis[1] + " " + (xaxis[j] - xaxis[i]) + " " + (yaxis[2] - yaxis[1]));
-              
-                          
-                
+          
+            for (i = 1, j = 2, k = 0; k <10 ;k++)
+            {            
                 Crop filter = new Crop(new Rectangle(xaxis[i], yaxis[1], (xaxis[j] - xaxis[i]), yaxis[2] - yaxis[1]));
                 croppedImg[k]= filter.Apply(bwimage);
                 i = i + 2;
@@ -116,8 +61,11 @@ namespace WindowsFormsApp1
             pictureBox4.Image = croppedImg[2];
             pictureBox5.Image = croppedImg[3];
             pictureBox6.Image = croppedImg[4];
-
-
+            pictureBox7.Image = croppedImg[5];
+            pictureBox8.Image = croppedImg[6];
+            pictureBox9.Image = croppedImg[7];
+            pictureBox10.Image = croppedImg[8];
+            pictureBox11.Image = croppedImg[9];
 
         }
 
@@ -132,6 +80,64 @@ namespace WindowsFormsApp1
 
             return grayimage;
         } 
+
+        public int[] getYArray(int xmax,int ymax, Bitmap bwimage)
+        {
+            int y, x, iy = 1, i = 1;
+            int[] tempy = new int[ymax];
+            int[] yaxis = new int[ymax];
+            for (y = 1; y < ymax; y++)
+            {
+                for (x = 1; x < xmax; x++)
+                {
+                    if (bwimage.GetPixel(x, y).Name == "ff000000")
+                    {
+                        tempy[iy++] = y;
+                        break;
+                    }
+                }
+            }
+            for (int p = 1; p < ymax; p++)
+            {
+
+                if ((tempy[p - 1] != tempy[p] - 1) || (tempy[p] + 1 != tempy[p + 1]))
+                {
+                    yaxis[i++] = tempy[p] + 1;
+                    Console.WriteLine(yaxis[p]);
+                }
+            }
+            return yaxis;
+        }
+
+        public int[] getXArray(int xmax, int ymax, Bitmap bwimage)
+        {
+            int y, x, ix = 1, i = 1;
+            int[] tempx = new int[xmax];
+            int[] xaxis = new int[xmax];
+            for (x = 1; x < xmax; x++)
+            {
+                for (y = 0; y < ymax; y++)
+                {
+                    if (bwimage.GetPixel(x, y).Name == "ff000000")
+                    {
+                        tempx[ix++] = x;
+                        break;
+                    }
+                }
+            }
+            i = 1;
+            for (int p = 1; p < xmax; p++)
+            {
+
+                if ((tempx[p - 1] != tempx[p] - 1) || (tempx[p] + 1 != tempx[p + 1]))
+                {
+                    xaxis[i] = tempx[p] + 1;
+                    i++;
+                }
+            }
+            return xaxis;
+        }
+
     }
 
 }
