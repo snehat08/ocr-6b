@@ -41,6 +41,7 @@
             this.pictureBox9 = new System.Windows.Forms.PictureBox();
             this.pictureBox10 = new System.Windows.Forms.PictureBox();
             this.pictureBox11 = new System.Windows.Forms.PictureBox();
+            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -162,11 +163,22 @@
             this.pictureBox11.TabIndex = 13;
             this.pictureBox11.TabStop = false;
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(166, 387);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(316, 23);
+            this.button3.TabIndex = 14;
+            this.button3.Text = "Check all the Images";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // Form3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(654, 491);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.pictureBox11);
             this.Controls.Add(this.pictureBox10);
             this.Controls.Add(this.pictureBox9);
@@ -212,5 +224,6 @@
         private System.Windows.Forms.PictureBox pictureBox9;
         private System.Windows.Forms.PictureBox pictureBox10;
         private System.Windows.Forms.PictureBox pictureBox11;
+        private System.Windows.Forms.Button button3;
     }
 }

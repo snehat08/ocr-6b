@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
@@ -39,20 +40,26 @@ namespace WindowsFormsApp1
             int[] yaxis = new int[ymax];
             int[] tempx = new int[xmax];
             int[] tempy = new int[ymax];
-            int y, x, i = 1,j = 1;
-            int iy = 1;
-            int ix = 1;
+            int i = 1, j = 1;
+            
 
             yaxis = getYArray(xmax, ymax, bwimage); 
             xaxis = getXArray(xmax, ymax, bwimage);
 
             int k;
             Bitmap[] croppedImg = new Bitmap[30];
-          
-            for (i = 1, j = 2, k = 0; k <10 ;k++)
-            {            
-                Crop filter = new Crop(new Rectangle(xaxis[i], yaxis[1], (xaxis[j] - xaxis[i]), yaxis[2] - yaxis[1]));
-                croppedImg[k]= filter.Apply(bwimage);
+            Console.Write(xaxis.Length);
+            for (i = 1, j = 2, k = 0; k <(xaxis.Length)/2 ;k++)
+            {
+                try
+                {
+                    Crop filter = new Crop(new Rectangle(xaxis[i], yaxis[1], (xaxis[j] - xaxis[i]), yaxis[2] - yaxis[1]));
+                    croppedImg[k] = filter.Apply(bwimage);
+                    croppedImg[k].Save("E://ocr//saved_images//img_" + k + ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                } catch
+                {
+                    break;
+                }
                 i = i + 2;
                 j = j + 2;
             }
@@ -138,6 +145,10 @@ namespace WindowsFormsApp1
             return xaxis;
         }
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Process.Start(@"e:\ocr\saved_images\");
+        }
     }
 
 }
